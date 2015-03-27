@@ -5,6 +5,8 @@ class Actividades extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('actividades_model');
+		$this->load->library('form_validation');
 		$this->load->library('table');
   		$template = array('table_open' => "<table class='table table-condensed table-striped'");
   		$this->table->set_template($template);
@@ -13,15 +15,12 @@ class Actividades extends CI_Controller {
 
 	public function index()
 	{	
-
-		$this->load->model('actividad');
-		$datos['actividades']=$this->actividad->DevolverActividades();
-		$datos['instructores']=$this->actividad->DevolverInstructores();
+		$datos['actividades']=$this->actividades_model->get_actividades();
+		$datos['instructores']=$this->actividades_model->get_instructores();
 		$this->load->view('pages/actividades',$datos);
 	}
 
 	public function agregar(){
-		$this->load->library('form_validation');
 		$this->form_validation->set_rules('nombre','Nombre','required|is_unique[actividad.nombre]');
 		$this->form_validation->set_rules('descripcion','Descripcion','required');
 		$this->form_validation->set_rules('fecha','Fecha','required');
@@ -35,33 +34,33 @@ class Actividades extends CI_Controller {
 			$fecha=$_POST['fecha'];
 			$instructor=$_POST['instructor'];
 
-			$data=array ('0'=>$nombre,'1'=>$descripcion,'2'=>$instructor,'3'=>$fecha);
+			$data=array ('nombre'=>$nombre,'descripcion'=>$descripcion,'instructor'=>$instructor,'fecha'=>$fecha);
 
-			$this->load->model('actividad');
-			$this->actividad->AgregarActividad($data);
-			$datos['actividades']=$this->actividad->DevolverActividades();
-			$datos['mensaje']='Actividad Agregada';
-
-			$this->load->view('pages/actividades',$datos);
-
-
+			$this->actividades_model->set_actividad($data);
+			$datos['actividades']=$this->actividades_model->get_actividades();
+			$datos['mensaje']='<p>Actividad Agregada</p>';
+			$datos['instructores']=$this->actividades_model->get_instructores();
+			redirect('actividades');
 		}
 		else
 		{
-			$this->load->model('actividad');
-			$datos['actividades']=$this->actividad->DevolverActividades();	
-	
+			$datos['actividades']=$this->actividades_model->get_actividades();	
+			$datos['mensaje']='<p>Validación incorrecta</p>';
+			$datos['instructores']=$this->actividades_model->get_instructores();
 			$this->load->view('pages/actividades',$datos);
+		}
+	}
+
+	public function eliminar($id) {
+		if ($this->actividades_model->delete_actividad($id)) {
+			$this->session->set_userdata('success', 'Actividad eliminada con éxito.');
+			redirect('actividades/index');
+
+		}
+		else {
+			$this->session->set_userdata('error', 'No se encontró la actividad con el id correspondiente.');
+			redirect('actividades/index');
 		}
 
 	}
-	public function mostrarActividades(){
-		$this->load->model('actividad');
-		$datos['actividades']=$this->actividad->DevolverActividades();
-		$this->load->view('pages/actividades',$datos);
-
-	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

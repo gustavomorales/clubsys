@@ -37,7 +37,6 @@ class Socios_model extends CI_model {
 			'direccion' => $data['direccion'],
 			'fecha_nacimiento' => $data['nacimiento']
 			);
-
 		$this->db->where('id', $data['id']);
 		$this->db->update('usuario', $info); 
 	}

@@ -101,7 +101,7 @@ class Socios extends CI_Controller {
 				'direccion' => $this->input->post('direccionMod'),
 				'nacimiento' => $this->input->post('fechaNacimientoMod')
 				);
-			echo json_encode($detalles);die;
+			#echo json_encode($detalles);die;
 			$this->socios_model->update_socio($detalles);
 			redirect('socios/index');
 		}
