@@ -101,18 +101,23 @@ class Socios extends CI_Controller {
 				'direccion' => $this->input->post('direccionMod'),
 				'nacimiento' => $this->input->post('fechaNacimientoMod')
 				);
-			#echo json_encode($detalles);die;
 			$this->socios_model->update_socio($detalles);
-			redirect('socios/index');
+			$this->index();
 		}
 		else {
-			$this->session->set_flashdata('error', validation_errors());
-			redirect('socios/index');
+			$this->index();
 		}
 	}
 
 	public function eliminar($id) {
-		$this->socios_model->delete_socio($id);
-		redirect('socios/index');
+		if ($this->socios_model->delete_socio($id)) {
+			$this->session->set_flashdata('success', 'Eliminación exitosa.');
+			$this->index();
+		}
+		else {
+			$this->session->set_flashdata('error', "Error al intentar eliminar el item de id {$id}.");
+			$this->index();
+		}
+
 	}
 }

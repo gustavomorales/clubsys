@@ -25,7 +25,16 @@
                             </li>
                         </ol>
                     </div>
-                    <?php echo validation_errors('<div class="col-sm-12"><div class="alert alert-warning">', '</div></div>'); ?>
+                    <div class="col-sm-12">
+                    <?php
+                    if ($this->session->flashdata('success'))
+                        echo '<div class="alert alert-success">' . $this->session->flashdata('success') . '</div>';
+                    if ($this->session->flashdata('error')) {
+                        echo '<div class="alert alert-danger">' . $this->session->flashdata('error') . '</div>';
+                    }
+                    echo validation_errors('<div class="alert alert-warning">', '</div>');
+                    ?>
+                    </div>
                     <div class="col-sm-6">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#socioModal">
