@@ -10,8 +10,7 @@ class Socios extends CI_Controller {
 		$this->table->set_template($template);
 	}
 	public function index() {
-		$this->form_validation->set_rules('busqueda', 'Búsqueda', 'required|alpha_numeric');
-
+		$this->form_validation->set_rules('busqueda', 'busqueda', '');
 		if ($this->form_validation->run()) {
 			$string = $this->input->post('busqueda');
 			$data['socios'] = $this->socios_model->get_socios($string);
@@ -110,14 +109,10 @@ class Socios extends CI_Controller {
 	}
 
 	public function eliminar($id) {
-		if ($this->socios_model->delete_socio($id)) {
-			$this->session->set_flashdata('success', 'Eliminación exitosa.');
-			$this->index();
-		}
-		else {
+		if ($this->socios_model->delete_socio($id))
+			$this->session->set_flashdata('mensaje', "Eliminaci&oacute;n exitosa.");
+		else
 			$this->session->set_flashdata('error', "Error al intentar eliminar el item de id {$id}.");
-			$this->index();
-		}
-
+		redirect('socios/index');
 	}
 }

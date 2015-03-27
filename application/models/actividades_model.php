@@ -10,15 +10,12 @@ class Actividades_model extends CI_Model {
 
 		$sql = "call agregar_actividad(?, ?, ?, ?)";
 
-   		//$queryAgregar = $this->db->query("call agregar_actividad({$instructor}, {$nombre},{$descripcion}, {$fecha})");
-
 		$queryAgregar = $this->db->query($sql, array($instructor, $nombre, $descripcion, $fecha));
 
-		if( FALSE === $queryAgregar ) {
-			echo( "Error al agregar actividad.");
-		} else {
-			echo( "Inclusión exitosa." );
-		}
+		if ($this->db->affected_rows() > 0)
+			return true;
+		else
+			return false;
 	}
 
 	public function set_horario($info) {
@@ -62,10 +59,14 @@ class Actividades_model extends CI_Model {
 			'nombre' => $data['nombre'],
 			'instructor_id' => $data['instructor'],
 			'descripcion' => $data['descripcion'],
-			'fecha' => $data['fecha']
+
 			);
 		$this->db->where('id', $data['id']);
-		$this->db->update('actividad', $info); 
+		$this->db->update('actividad', $info);
+				if ($this->db->affected_rows() > 0)
+			return true;
+		else
+			return false; 
 	}
 
 	public function delete_actividad($id) {
