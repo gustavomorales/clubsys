@@ -25,8 +25,7 @@
                             </li>
                         </ol>
                     </div>
-
-                    <?php echo $this->session->flashdata('error'); ?>
+                    <?php echo validation_errors('<div class="col-sm-12"><div class="alert alert-warning">', '</div></div>'); ?>
                     <div class="col-sm-6">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#socioModal">
@@ -140,7 +139,7 @@ echo $this->table->generate();
             </div>
             <?php echo form_open('socios/modificar','class="form-horizontal"'); ?>
             <div class="modal-body">
-                <input type="hidden" name="idMod" value="">
+                <input type="hidden" id="inputIdMod" name="idMod" value="">
                 <div class="form-group">
                     <label for="inputNombresMod" class="col-sm-2 control-label">Nombres</label>
                     <div class="col-sm-10">
@@ -208,6 +207,7 @@ echo $this->table->generate();
                 var arr = tableData[2].split(', ');
                 $("#inputNombresMod").val($.trim(arr[0]));
                 $("#inputApellidosMod").val($.trim(arr[1]));
+                $("#inputIdMod").val($.trim(tableData[0]));
                 $("#inputDireccionMod").val($.trim(tableData[3]));
                 $("#inputFechaNacimientoMod").val($.trim(tableData[4]));
                 $("#selectTipoMod option").filter(function() {

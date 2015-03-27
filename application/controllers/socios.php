@@ -5,7 +5,6 @@ class Socios extends CI_Controller {
 		$this->load->model('socios_model');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 		$this->load->library('table');
 		$template = array('table_open' => "<table class='table table-condensed table-striped'");
 		$this->table->set_template($template);
@@ -61,11 +60,10 @@ class Socios extends CI_Controller {
 				);
 			
 			$this->socios_model->set_socios($detalles);
-			redirect('socios/index');
+			$this->index();
 		}
 		else {
-			$this->session->set_flashdata('error', validation_errors());
-			redirect('socios/index');
+			$this->index();
 		}
 	}
 
@@ -96,7 +94,7 @@ class Socios extends CI_Controller {
 
 		if ($this->form_validation->run()) {
 			$detalles = array(
-				'id' => $this->input->post('inputIdMod'),
+				'id' => $this->input->post('idMod'),
 				'nombres' => $this->input->post('nombresMod'),
 				'apellidos' => $this->input->post('apellidosMod'),
 				'tipo' => $this->input->post('tipoMod'),
