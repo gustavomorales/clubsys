@@ -25,16 +25,7 @@
                             </li>
                         </ol>
                     </div>
-                    <div class="col-sm-12">
-                    <?php
-                    if ($this->session->flashdata('mensaje')) {
-                        echo '<div class="alert alert-success">' . $this->session->flashdata('mensaje') . '</div>';
-                    } if ($this->session->flashdata('error')) {
-                        echo '<div class="alert alert-error">' . $this->session->flashdata('error') . '</div>';
-                    }
-                    echo validation_errors('<div class="alert alert-warning">', '</div>');
-                    ?>
-                    </div>
+                    <?php $this->load->view('templates/mensajes'); ?>
                     <div class="col-sm-6">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#socioModal">
@@ -116,19 +107,17 @@
                         $this->table->set_heading(array('#', 'Tipo', 'Apellidos y nombres', 'Dirección', 'Fecha de nacimiento', 'Fecha de inscripción', ""));
                         foreach ($socios as $socios_item) {
                             $this->table->add_row(array(
-                                $socios_item['#'],
-                                $socios_item['Tipo'],
-                                $socios_item['Apellidos y nombres'],
-                                $socios_item['Dirección'],
-                                $socios_item['Fecha de nacimiento'],
-                                $socios_item['Fecha de inscripción'],
-                                '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Lista de actividades" data-toggle="modal" data-target="#modificarModal">
-                                <i class="glyphicon glyphicon-list"></i>
-                            </button>'." ".
+                                $socios_item['usuario_id'],
+                                $socios_item['tipo'],
+                                $socios_item['nombre_completo'],
+                                $socios_item['direccion'],
+                                $socios_item['fecha_nacimiento'],
+                                $socios_item['fecha_inscripcion'],
+                                anchor("actividades/lista_actividades/{$socios_item['usuario_id']}", '<i class="glyphicon glyphicon-list"></i>', array('class' => 'btn btn-info btn-sm', "role" => "button", "title" => "Lista de actividades"))." ".
                                 '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Modificar" data-toggle="modal" data-target="#modificarModal">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </button>'." ".
-                            anchor("socios/eliminar/{$socios_item['#']}", '<i class="glyphicon glyphicon-trash">', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['Apellidos y nombres']}?')", 'class' => 'btn btn-danger btn-sm', "role" => "button", "title" => "Eliminar"))
+                            anchor("socios/eliminar/{$socios_item['usuario_id']}", '<i class="glyphicon glyphicon-trash">', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['nombre_completo']}?')", 'class' => 'btn btn-danger btn-sm', "role" => "button", "title" => "Eliminar"))
                             ));
 }
 echo $this->table->generate();

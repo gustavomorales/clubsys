@@ -77,4 +77,27 @@ class Actividades_model extends CI_Model {
 		else
 			return false;
 	}
+
+	public function get_usuarios_actividad($id) {
+			$query = $this->db->get_where('lista_participantes',array('id_actividad' => $id));
+			//chequear fecha de finalizacion
+
+			return $query->result_array();
+	}
+
+	public function get_actividades_usuario($id) {
+		$query = $this->db->get_where('lista_participantes',array('id_usuario' => $id));
+		//chequear fecha de finalizacion
+		return $query->result_array();
+	}
+
+	public function inscribir_actividad($usuario, $actividad) {
+		$sql = ("call inscribir_a_actividad(?, ?)");
+		$this->db->query($sql, array($usuario, $actividad));
+	}
+
+	public function desinscribir_actividad($usuario, $actividad) {
+		$sql = ("call desinscribir_a_actividad(?, ?)");
+		$this->db->query($sql, array($actividad, $usuario));
+	}
 }

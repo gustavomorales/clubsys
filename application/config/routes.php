@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
+$route['actividades/baja/(:num)/(:num)'] = 'actividades/baja/$1/$2';
 
 
 /* End of file routes.php */

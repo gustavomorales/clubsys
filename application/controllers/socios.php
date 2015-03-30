@@ -12,7 +12,7 @@ class Socios extends CI_Controller {
 	public function index() {
 		if (isset($_POST['submitBuscar']))
 		{
-			$this->form_validation->set_rules('busqueda', 'busqueda', 'alfanumeric');
+			$this->form_validation->set_rules('busqueda', 'busqueda', 'alpha_numeric');
 		}
 		if ($this->form_validation->run()) {
 			$string = $this->input->post('busqueda');

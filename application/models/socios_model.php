@@ -54,4 +54,5 @@ class Socios_model extends CI_model {
 		else
 			return false;
 	}
+
 }
