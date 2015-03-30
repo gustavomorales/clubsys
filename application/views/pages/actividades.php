@@ -108,9 +108,9 @@
 										$act_item['nombre'],
 										$act_item['descripcion'],
 										$act_item['instructor'],
-										'<button type="button" class="btn btn-info btnListaInscriptos" data-toggle="modal" data-target="#inscriptosModal" title="Lista de inscriptos"><i class="glyphicon glyphicon-list"></i></button>' . " " . 
-										'<button type="button" class="btn btn-info btnModificarActividad" data-toggle="modal" data-target="#modificarModal" title="Modificar"><i class="glyphicon glyphicon-pencil"></i></button>' . " " . 
-										anchor("actividades/eliminar/{$act_item['id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar {$act_item['nombre']}?')", 'class' => 'btn btn-danger', 'role' => 'button', 'title' => 'Eliminar'))
+										'<button type="button" class="btn btn-info btn-sm btnListaInscriptos" data-toggle="modal" data-target="#inscriptosModal" title="Lista de inscriptos"><i class="glyphicon glyphicon-list"></i></button>' . " " . 
+										'<button type="button" class="btn btn-info btn-sm btnModificarActividad" data-toggle="modal" data-target="#modificarModal" title="Modificar"><i class="glyphicon glyphicon-pencil"></i></button>' . " " . 
+										anchor("actividades/eliminar/{$act_item['id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar {$act_item['nombre']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
 									));
 								}
 								echo $this->table->generate();

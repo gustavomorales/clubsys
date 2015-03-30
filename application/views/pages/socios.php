@@ -44,9 +44,9 @@
                     <div class="col-sm-6 text-right">
                         <?php echo form_open('socios','class="form-inline role="search"'); ?>
                         <div class="input-group">
-                            <input type="search" name="busqueda" class="form-control" placeholder="Buscar..." required>
+                            <input type="search" name="busqueda" class="form-control" placeholder="Buscar...">
                             <span class="input-group-btn">
-                                <button type="input" class="btn btn-default">
+                                <button type="submit" class="btn btn-default" name="submitBuscar">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
                             </span>
@@ -122,10 +122,13 @@
                                 $socios_item['Dirección'],
                                 $socios_item['Fecha de nacimiento'],
                                 $socios_item['Fecha de inscripción'],
-                                '<button type="button" class="btn btn-info btn-block btnModificarSocio" data-toggle="modal" data-target="#modificarModal">
-                                <i class="glyphicon glyphicon-pencil"><span class="hidden-xs"> Modificar</span></i>
+                                '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Lista de actividades" data-toggle="modal" data-target="#modificarModal">
+                                <i class="glyphicon glyphicon-list"></i>
                             </button>'." ".
-                            anchor("socios/eliminar/{$socios_item['#']}", '<i class="glyphicon glyphicon-trash"><span class="hidden-xs"> Borrar</span></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['Apellidos y nombres']}?')", 'class' => 'btn btn-danger btn-sm btn-block', "role" => "button"))
+                                '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Modificar" data-toggle="modal" data-target="#modificarModal">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </button>'." ".
+                            anchor("socios/eliminar/{$socios_item['#']}", '<i class="glyphicon glyphicon-trash">', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['Apellidos y nombres']}?')", 'class' => 'btn btn-danger btn-sm', "role" => "button", "title" => "Eliminar"))
                             ));
 }
 echo $this->table->generate();
@@ -215,8 +218,8 @@ echo $this->table->generate();
                 }).get();
                 $("#inputIdMod").val($.trim(tableData[0]));
                 var arr = tableData[2].split(', ');
-                $("#inputNombresMod").val($.trim(arr[0]));
-                $("#inputApellidosMod").val($.trim(arr[1]));
+                $("#inputApellidosMod").val($.trim(arr[0]));
+                $("#inputNombresMod").val($.trim(arr[1]));
                 $("#inputIdMod").val($.trim(tableData[0]));
                 $("#inputDireccionMod").val($.trim(tableData[3]));
                 $("#inputFechaNacimientoMod").val($.trim(tableData[4]));
