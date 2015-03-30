@@ -12,14 +12,6 @@
 
 			<div class="container-fluid">
 				<div class="row">
-					<?php
-					echo $this->session->userdata('error');
-					if(isset($mensaje)) {
-						echo '<div class="alert alert-warning" role="alert">'
-							. $mensaje . validation_errors()
-							. '</div>';
-					} 
-					?>
 					<div class="col-lg-12">
 						<h1 class="page-header">
 							Actividades
@@ -34,6 +26,19 @@
 							</li>
 						</ol>
 					</div>
+                    <div class="col-sm-12">
+                    <?php
+                    if ($this->session->flashdata('success')) {
+                        echo '<div class="alert alert-success">' . $this->session->flashdata('success') . '</div>';
+                    }
+                    if ($this->session->flashdata('warning')) {
+                        echo '<div class="alert alert-warning">' . $this->session->flashdata('warning') . '</div>';
+                    }
+                    if ($this->session->flashdata('danger')) {
+                        echo '<div class="alert alert-danger">' . $this->session->flashdata('danger') . '</div>';
+                    }
+                    ?>
+                    </div>
 					<div class="col-sm-6">
 						<!-- Button trigger modal -->
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -103,10 +108,9 @@
 										$act_item['nombre'],
 										$act_item['descripcion'],
 										$act_item['instructor'],
-										'<button type="button" class="btn btn-info btn-block btnModificarActividad" data-toggle="modal" data-target="#modificarModal">
-										<i class="glyphicon glyphicon-pencil"><span class="hidden-xs"> Modificar</span></i>
-									</button>'." ".
-									anchor("actividades/eliminar/{$act_item['id']}", '<i class="glyphicon glyphicon-trash"><span class="hidden-xs"> Borrar</span></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar {$act_item['nombre']}?')", 'class' => 'btn btn-danger btn-block', 'role' => 'button'))
+										'<button type="button" class="btn btn-info btn-sm btnListaInscriptos" data-toggle="modal" data-target="#inscriptosModal" title="Lista de inscriptos"><i class="glyphicon glyphicon-list"></i></button>' . " " . 
+										'<button type="button" class="btn btn-info btn-sm btnModificarActividad" data-toggle="modal" data-target="#modificarModal" title="Modificar"><i class="glyphicon glyphicon-pencil"></i></button>' . " " . 
+										anchor("actividades/eliminar/{$act_item['id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar {$act_item['nombre']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
 									));
 								}
 								echo $this->table->generate();
@@ -130,6 +134,7 @@
 									</div>
 									<?php echo form_open('actividades/modificar','class="form-horizontal"'); ?>
 									<div class="modal-body">
+                						<input type="hidden" id="inputIdMod" name="idMod" value="">
 										<div class="form-group">
 											<label for="nombre" class="col-sm-2 control-label">Nombre</label>
 											<div class="col-sm-10">
@@ -193,11 +198,11 @@
 				var tableData = $(this).closest("tr").children("td").map(function() {
 					return $(this).text();
 				}).get();
-
-				$("#nombreMod").val($.trim(tableData[0]));
-				$("#descripcionMod").val($.trim(tableData[1]));
+                $("#inputIdMod").val($.trim(tableData[0]));
+				$("#nombreMod").val($.trim(tableData[1]));
+				$("#descripcionMod").val($.trim(tableData[2]));
 				$("#instructorMod option").filter(function() {
-					return($(this).text() == $.trim(tableData[2]))
+					return($(this).text() == $.trim(tableData[3]))
 				}).prop('selected', true);
 			})
 		});	

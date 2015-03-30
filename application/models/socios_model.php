@@ -49,5 +49,9 @@ class Socios_model extends CI_model {
 
 	public function delete_socio($id) {
 		$this->db->delete('usuario', array('id' => $id));
+		if ($this->db->affected_rows() > 0)
+			return true;
+		else
+			return false;
 	}
 }

@@ -24,8 +24,6 @@ class Actividades extends CI_Controller {
 		$this->form_validation->set_rules('nombre','Nombre','required|is_unique[actividad.nombre]');
 		$this->form_validation->set_rules('descripcion','Descripcion','required');
 		$this->form_validation->set_rules('fecha','Fecha','required');
-		#$this->form_validation->set_message('required','El campo %s es obligatorio');
-		#$this->form_validation->set_message('is_unique','El campo %s debe ser unico');
 
 		if($this->form_validation->run()!=false){
 
@@ -36,31 +34,45 @@ class Actividades extends CI_Controller {
 
 			$data=array ('nombre'=>$nombre,'descripcion'=>$descripcion,'instructor'=>$instructor,'fecha'=>$fecha);
 
-			$this->actividades_model->set_actividad($data);
-			$datos['actividades']=$this->actividades_model->get_actividades();
-			$datos['mensaje']='<p>Actividad Agregada</p>';
-			$datos['instructores']=$this->actividades_model->get_instructores();
-			redirect('actividades');
+			if ($this->actividades_model->set_actividad($data))
+				$this->session->set_flashdata('success', 'Actividad agregada con &eacute;xito.');
+			else
+				$this->session->set_flashdata('danger', 'Error al agregar actividad.');
+
+			redirect('actividades/index');
 		}
 		else
 		{
-			$datos['actividades']=$this->actividades_model->get_actividades();	
-			$datos['mensaje']='<p>Validación incorrecta</p>';
-			$datos['instructores']=$this->actividades_model->get_instructores();
-			$this->load->view('pages/actividades',$datos);
+			$this->session->set_flashdata('warning', validation_errors());
+			redirect('actividades');
 		}
 	}
 
 	public function eliminar($id) {
-		if ($this->actividades_model->delete_actividad($id)) {
-			$this->session->set_userdata('success', 'Actividad eliminada con éxito.');
-			redirect('actividades/index');
+		if ($this->actividades_model->delete_actividad($id))
+			$this->session->set_flashdata('success', 'Actividad eliminada con &eacute;xito.');
+		else
+			$this->session->set_flashdata('danger', 'No se encontr&oacute; la actividad con el id correspondiente.');
 
-		}
-		else {
-			$this->session->set_userdata('error', 'No se encontró la actividad con el id correspondiente.');
+		redirect('actividades/index');
+	}
+
+	public function modificar(){
+
+		$id = $this->input->post('idMod');
+		$nombre= $this->input->post('nombreMod');
+		$instructor= $this->input->post('instructorMod');
+		$descripcion= $this->input->post('descripcionMod');
+		$fecha= $this->input->post('fechaMod');
+
+		$data=array('id'=>$id,'nombre'=>$nombre,'instructor'=>$instructor,'descripcion'=>$descripcion);
+
+		if($this->actividades_model->update_actividad($data))
+			$this->session->set_flashdata('success', 'Actividad actualizada con &eacute;xito.');
+		else
+			$this->session->set_flashdata('danger', 'Error al modificar actividad.');
+
 			redirect('actividades/index');
-		}
 
 	}
 }

@@ -27,10 +27,10 @@
                     </div>
                     <div class="col-sm-12">
                     <?php
-                    if ($this->session->flashdata('success'))
-                        echo '<div class="alert alert-success">' . $this->session->flashdata('success') . '</div>';
-                    if ($this->session->flashdata('error')) {
-                        echo '<div class="alert alert-danger">' . $this->session->flashdata('error') . '</div>';
+                    if ($this->session->flashdata('mensaje')) {
+                        echo '<div class="alert alert-success">' . $this->session->flashdata('mensaje') . '</div>';
+                    } if ($this->session->flashdata('error')) {
+                        echo '<div class="alert alert-error">' . $this->session->flashdata('error') . '</div>';
                     }
                     echo validation_errors('<div class="alert alert-warning">', '</div>');
                     ?>
@@ -122,10 +122,13 @@
                                 $socios_item['Dirección'],
                                 $socios_item['Fecha de nacimiento'],
                                 $socios_item['Fecha de inscripción'],
-                                '<button type="button" class="btn btn-info btn-block btnModificarSocio" data-toggle="modal" data-target="#modificarModal">
-                                <i class="glyphicon glyphicon-pencil"><span class="hidden-xs"> Modificar</span></i>
+                                '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Lista de actividades" data-toggle="modal" data-target="#modificarModal">
+                                <i class="glyphicon glyphicon-list"></i>
                             </button>'." ".
-                            anchor("socios/eliminar/{$socios_item['#']}", '<i class="glyphicon glyphicon-trash"><span class="hidden-xs"> Borrar</span></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['Apellidos y nombres']}?')", 'class' => 'btn btn-danger btn-sm btn-block', "role" => "button"))
+                                '<button type="button" class="btn btn-info btn-sm btnModificarSocio" title="Modificar" data-toggle="modal" data-target="#modificarModal">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </button>'." ".
+                            anchor("socios/eliminar/{$socios_item['#']}", '<i class="glyphicon glyphicon-trash">', array('onclick'=>"return confirm('¿Está seguro que desea eliminar al socio {$socios_item['Apellidos y nombres']}?')", 'class' => 'btn btn-danger btn-sm', "role" => "button", "title" => "Eliminar"))
                             ));
 }
 echo $this->table->generate();
