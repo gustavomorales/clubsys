@@ -13,7 +13,7 @@
 					<div class="col-lg-12">
 						<h1 class="page-header">
 							Lista de actividades
-							<small><?= $getsocio[0]['nombres']?></small>
+							<small><?= $getsocio[0]['apellido'] . ', ' . $getsocio[0]['nombres']?></small>
 						</h1>
 						<ol class="breadcrumb">
 							<li>
@@ -31,7 +31,7 @@
 				<div class="col-sm-12">
 					<?php echo form_open('actividades/alta','class="form-inline"'); ?>
 						<div class="form-group">
-							<input type="hidden" name="usuario" value=<?= $lactividades[0]['id_usuario'] ?>>
+							<input type="hidden" name="usuario" value=<?= $getsocio[0]['id'] ?>>
 							<label for="actividades">Actividades</label>
 							<select class="form-control" id="actividades" name="actividades">
 							<option value='0'>---</option>
@@ -56,8 +56,8 @@
 								$this->table->set_heading(array('Actividad', ""));
 								foreach ($lactividades as $act_item) {
 									$this->table->add_row(array(
-										$act_item['nombre_actividad'],
-										anchor("actividades/baja/{$act_item['id_actividad']}/{$act_item['id_usuario']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro de dar de baja {$act_item['nombre_actividad']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
+										$act_item['actividad'],
+										anchor("actividades/baja/{$act_item['actividad_id']}/{$getsocio[0]['id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro de dar de baja {$act_item['actividad']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
 									));
 								}
 								echo $this->table->generate();

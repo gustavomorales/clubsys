@@ -22,7 +22,7 @@ class Actividades extends CI_Controller {
 	}
 
 	public function agregar(){
-		$this->form_validation->set_rules('nombre','Nombre','required|is_unique[actividad.nombre]');
+		$this->form_validation->set_rules('nombre','Nombre','required[actividad.nombre]');
 		$this->form_validation->set_rules('descripcion','Descripcion','required');
 		$this->form_validation->set_rules('fecha','Fecha','required');
 
@@ -35,11 +35,10 @@ class Actividades extends CI_Controller {
 
 			$data=array ('nombre'=>$nombre,'descripcion'=>$descripcion,'instructor'=>$instructor,'fecha'=>$fecha);
 
-			if ($this->actividades_model->set_actividad($data))
-				$this->session->set_flashdata('success', 'Actividad agregada con &eacute;xito.');
-			else
-				$this->session->set_flashdata('danger', 'Error al agregar actividad.');
-
+			$mensaje = $this->actividades_model->set_actividad($data);
+			
+			$this->session->set_flashdata($mensaje[0], $mensaje[1]);
+			
 			redirect('actividades/index');
 		}
 		else
@@ -68,18 +67,25 @@ class Actividades extends CI_Controller {
 
 		$data=array('id'=>$id,'nombre'=>$nombre,'instructor'=>$instructor,'descripcion'=>$descripcion);
 
-		if($this->actividades_model->update_actividad($data))
-			$this->session->set_flashdata('success', 'Actividad actualizada con &eacute;xito.');
-		else
-			$this->session->set_flashdata('danger', 'Error al modificar actividad.');
+		$mensaje = $this->actividades_model->update_actividad($data);
 
-			redirect('actividades/index');
+		$this->session->set_flashdata($mensaje[0], $mensaje[1]);
+			
+		redirect('actividades/index');
 
 	}
 	public function baja($id_actividad, $id_usuario) {
-		$this->actividades_model->desinscribir_actividad($id_usuario,$id_actividad);
+		$mensaje = $this->actividades_model->desinscribir_actividad($id_usuario,$id_actividad);
+		$this->session->set_flashdata($mensaje[0], $mensaje[1]);
 
 		redirect("actividades/lista_actividades/{$id_usuario}");
+	}
+
+	public function baja2($id_actividad, $id_usuario) {
+		$mensaje = $this->actividades_model->desinscribir_actividad($id_usuario,$id_actividad);
+		$this->session->set_flashdata($mensaje[0], $mensaje[1]);
+
+		redirect("actividades/lista_inscriptos/{$id_actividad}");
 
 
 	}
@@ -94,21 +100,27 @@ class Actividades extends CI_Controller {
 
 	}
 
+	public function lista_inscriptos($id){
+		$datos['linscriptos']=$this->actividades_model->get_usuarios_actividad($id);
+		$this->load->view('pages/listadeinscriptos',$datos);
+	}
+
 	public function alta() {
 
 		$this->form_validation->set_rules('usuario','Usuario','required');
 		$this->form_validation->set_rules('actividades','Actividades','required');
 
 		if($this->form_validation->run()!=false){
+
 			$id_usuario=$this->input->post('usuario');
 			$id_actividad=$this->input->post('actividades');
-			$this->actividades_model->inscribir_actividad($id_usuario,$id_actividad);
-			redirect("actividades/lista_actividades/{$id_usuario}");
+			if($id_actividad != 0) {
+				$mensaje = $this->actividades_model->inscribir_actividad($id_usuario,$id_actividad);
+				$this->session->set_flashdata($mensaje[0], $mensaje[1]);
+			}
+			else
+				$this->session->set_flashdata('warning','Seleccione una Actividad');
 		}
-		else{
-
-		
-		}
-
+		redirect("actividades/lista_actividades/{$id_usuario}");
 	}
 }

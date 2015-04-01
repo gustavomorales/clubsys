@@ -58,7 +58,7 @@
 												<?php
 												if(isset($instructores)){
 													foreach ($instructores as $datos ) {?>
-													<option value="<?= $datos['#']?>"><?=$datos['Apellidos y nombres']?></option> 
+													<option value="<?= $datos['usuario_id']?>"><?=$datos['nombre_completo']?></option> 
 													<?php }}  
 													?>
 												</select>
@@ -95,8 +95,8 @@
 										$act_item['id'],
 										$act_item['nombre'],
 										$act_item['descripcion'],
-										$act_item['instructor'],
-										'<button type="button" class="btn btn-info btn-sm btnListaInscriptos" data-toggle="modal" data-target="#inscriptosModal" title="Lista de inscriptos"><i class="glyphicon glyphicon-list"></i></button>' . " " . 
+										$act_item["instructor"],
+										anchor("actividades/lista_inscriptos/{$act_item['id']}", '<i class="glyphicon glyphicon-list"></i>', array('class' => 'btn btn-info btn-sm', 'role' => 'button', 'title' => 'Lista de inscriptos')) . " " . 
 										'<button type="button" class="btn btn-info btn-sm btnModificarActividad" data-toggle="modal" data-target="#modificarModal" title="Modificar"><i class="glyphicon glyphicon-pencil"></i></button>' . " " . 
 										anchor("actividades/eliminar/{$act_item['id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro que desea eliminar {$act_item['nombre']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
 									));
@@ -137,7 +137,7 @@
 												<?php
 												if(isset($instructores)){
 													foreach ($instructores as $datos ) {?>
-													<option value="<?= $datos['#']?>"><?=$datos['Apellidos y nombres']?></option> 
+													<option value="<?= $datos['usuario_id']?>"><?=$datos['nombre_completo']?></option> 
 													<?php }}  
 													?>
 												</select>

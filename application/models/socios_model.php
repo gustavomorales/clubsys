@@ -12,7 +12,7 @@ class Socios_model extends CI_model {
 		$query_string = "SELECT * FROM `lista_usuarios`";
 
 		if ($string) {
-			$query_string .= " WHERE `Apellidos y nombres` LIKE '%{$string}%'";
+			$query_string .= " WHERE `nombre_completo` LIKE '%{$string}%'";
 		}
 
 		$query = $this->db->query($query_string);
@@ -23,7 +23,7 @@ class Socios_model extends CI_model {
 	public function get_sociosxtipo($tipoId) {
 		$this->db->select('*');
 		$this->db->from('lista_usuarios');
-		$this->db->where("tipoId = {$tipoId}");
+		$this->db->where("tipo_id = {$tipoId}");
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -53,6 +53,13 @@ class Socios_model extends CI_model {
 			return true;
 		else
 			return false;
+	}
+
+	public function get_socio_id($id){
+		$query=$this->db->get_where('usuario',array('id'=>$id));
+
+
+		return $query->result_array();
 	}
 
 }
