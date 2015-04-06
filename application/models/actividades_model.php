@@ -33,8 +33,10 @@ class Actividades_model extends CI_Model {
 
 		if ($nombre != $nombreActual) {
 			$existe = $this->db->get_where('actividad', array('nombre' => $nombre));
-			if ($existe->result_array()) 
-				return array('danger',"No puede haber dos actividades con el mismo nombre ({$nombre}).");
+			if ($existe->result_array()) {
+				$mensaje = htmlentities("No puede haber dos actividades con el mismo nombre ({$nombre}).", ENT_COMPAT, 'UTF-8');
+				return array('danger', $mensaje);
+			}
 		}
 
 		$sql = "update `actividad` SET `instructor_id`= ?,`nombre`= ?,`descripcion`= ? WHERE `id` = $id";
