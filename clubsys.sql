@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 01, 2015 at 01:02 PM
+-- Generation Time: Apr 06, 2015 at 01:05 PM
 -- Server version: 5.6.15
 -- PHP Version: 5.3.10-1ubuntu3.17
 
@@ -161,9 +161,9 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_usuario`(IN `tipo` INT, IN `nombres` VARCHAR(150), IN `apellido` VARCHAR(100), IN `pass` VARCHAR(100), IN `direccion` VARCHAR(150), IN `nacimiento` DATE)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_usuario`(IN `tipo` INT, IN `nombres` VARCHAR(150), IN `apellido` VARCHAR(100), IN `pass` VARCHAR(100), IN `direccion` VARCHAR(150), IN `nacimiento` DATE, IN `dni` INT)
     NO SQL
-INSERT INTO `usuario`(`tipo_id`, `nombres`, `apellido`, `password`, `direccion`, `fecha_nacimiento`) VALUES (tipo,nombres,apellido,PASSWORD(pass),direccion,nacimiento)$$
+INSERT INTO `usuario`(`tipo_id`, `nombres`, `apellido`, `password`, `direccion`, `fecha_nacimiento`, `dni`) VALUES (tipo,nombres,apellido,PASSWORD(pass),direccion,nacimiento, dni)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `desinscribir_a_actividad`(IN `actividad` INT, IN `usuario` INT)
     NO SQL
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `actividad` (
   `instructor_id` int(11) DEFAULT NULL,
   `nombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `descripcion` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `actividad`
@@ -215,7 +215,8 @@ INSERT INTO `actividad` (`id`, `instructor_id`, `nombre`, `descripcion`) VALUES
 (9, 8, 'Metegol', 'asdf'),
 (10, 4, 'Golf', 'asdf'),
 (11, 8, 'Curso de panadería', 'asdf'),
-(15, 4, 'Maravillas', 'asdf');
+(15, 4, 'Maravillas', 'asdf'),
+(16, 4, 'otro actividad', 'fdsfdsffsafa');
 
 -- --------------------------------------------------------
 
@@ -235,10 +236,13 @@ CREATE TABLE IF NOT EXISTS `actividad_por_usuario` (
 --
 
 INSERT INTO `actividad_por_usuario` (`fecha_inicio`, `fecha_finalizacion`, `usuario_id`, `actividad_id`) VALUES
-('2015-04-01', '9999-12-31', 1, 1),
-('2015-04-01', '9999-12-31', 1, 3),
+('2015-04-06', '9999-12-31', 1, 1),
+('2015-04-06', '9999-12-31', 1, 3),
+('2015-04-06', '9999-12-31', 1, 9),
+('2015-04-06', '9999-12-31', 1, 11),
 ('2015-04-01', '9999-12-31', 3, 2),
-('2015-04-01', '9999-12-31', 3, 9);
+('2015-04-01', '9999-12-31', 3, 9),
+('2015-04-06', '9999-12-31', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -273,7 +277,8 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('71db422a03c9747267a3e4b4f3652d30', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1427903766, 'a:1:{s:16:"flash:new:danger";s:19:"Ya est? inscripto.";}');
+('25b306e87da7f9d0150fdf31c15d4385', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1428336101, 'a:1:{s:17:"flash:old:success";s:37:"Actividad modificada con &eacute;xito";}'),
+('e9c3dd306b4c9a4a20458c1b92fbb56e', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1428330918, '');
 
 -- --------------------------------------------------------
 
@@ -378,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `historial_horario` (
   `actividad_id` int(11) NOT NULL,
   `fecha_implementacion` date NOT NULL,
   `fecha_finalizacion` date DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `historial_horario`
@@ -390,7 +395,8 @@ INSERT INTO `historial_horario` (`id`, `actividad_id`, `fecha_implementacion`, `
 (5, 1, '2015-04-14', NULL),
 (6, 2, '2015-07-14', NULL),
 (7, 11, '2015-11-30', NULL),
-(10, 15, '2015-12-31', NULL);
+(10, 15, '2015-12-31', NULL),
+(11, 16, '2015-04-06', NULL);
 
 -- --------------------------------------------------------
 
@@ -480,6 +486,7 @@ CREATE TABLE IF NOT EXISTS `lista_participantes` (
 --
 CREATE TABLE IF NOT EXISTS `lista_usuarios` (
 `usuario_id` int(11)
+,`dni` int(11)
 ,`tipo_id` int(11)
 ,`tipo` varchar(30)
 ,`nombre_completo` varchar(202)
@@ -605,26 +612,30 @@ INSERT INTO `tipo_usuario` (`id`, `nombre`) VALUES
 CREATE TABLE IF NOT EXISTS `usuario` (
 `id` int(11) NOT NULL,
   `tipo_id` int(11) NOT NULL,
+  `dni` int(11) NOT NULL,
   `nombres` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `apellido` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `direccion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `hora_inscripcion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `tipo_id`, `nombres`, `apellido`, `password`, `direccion`, `fecha_nacimiento`, `hora_inscripcion`) VALUES
-(1, 1, 'Michael', 'Jordan', '*948F9BEBA5FA4AD15FFF190593AC3EE1F9EDFE3F', 'Basket Blvd 512', '1973-02-17', '2015-03-06 10:32:11'),
-(3, 2, 'Donald', 'Trump', '*BFA23CCF482AA32DA037CAA02C47E441539B62BB', 'Trump hotel nr. 3, 14C', '1946-06-14', '2015-03-06 10:40:03'),
-(4, 3, 'Michael', 'Phelps', '*4F576A4C669E01243A30CAE93A4E54E402966BA2', 'Nobody', '1985-06-30', '2015-03-06 10:44:38'),
-(5, 4, 'Tiger', 'Woods', '*D382EF28FB7C47A3650AB8C4759F31A348014994', 'House of Tiger 34', '1975-12-30', '2015-03-06 10:54:54'),
-(6, 4, 'Aaron', 'Peirsol', '*EE780D4E296B6274F126A02EDDC3475B41C1D8AC', 'irvania', '1983-07-23', '2015-03-06 11:14:41'),
-(7, 3, 'Rikisaburo', 'Kakuryu', '*7E5E8E5443C19887D307CF1FC86FB31ACF0CB25F', 'Gran Templo numero 3', '1985-08-10', '2015-03-06 12:11:12'),
-(8, 3, 'Masafumi', 'Sakanashi', '*4E26442531A60232D7E3B2CB44295EC6997CC04A', 'Quilmes 3', '1954-10-31', '2015-03-12 10:37:19');
+INSERT INTO `usuario` (`id`, `tipo_id`, `dni`, `nombres`, `apellido`, `password`, `direccion`, `fecha_nacimiento`, `hora_inscripcion`) VALUES
+(1, 2, 15000002, 'Michael', 'Jordan', '*948F9BEBA5FA4AD15FFF190593AC3EE1F9EDFE3F', 'Basket Blvd 511', '1973-02-16', '2015-03-06 10:32:11'),
+(3, 2, 15000003, 'Donald', 'Trump', '*BFA23CCF482AA32DA037CAA02C47E441539B62BB', 'Trump hotel nr. 3, 14C', '1946-06-14', '2015-03-06 10:40:03'),
+(4, 3, 15000004, 'Michael', 'Phelps', '*4F576A4C669E01243A30CAE93A4E54E402966BA2', 'Nobody', '1985-06-30', '2015-03-06 10:44:38'),
+(5, 4, 15000005, 'Tiger', 'Woods', '*D382EF28FB7C47A3650AB8C4759F31A348014994', 'House of Tiger 34', '1975-12-30', '2015-03-06 10:54:54'),
+(6, 4, 15000006, 'Aaron', 'Peirsol', '*EE780D4E296B6274F126A02EDDC3475B41C1D8AC', 'irvania', '1983-07-23', '2015-03-06 11:14:41'),
+(7, 3, 15000007, 'Rikisaburo', 'Kakuryu', '*7E5E8E5443C19887D307CF1FC86FB31ACF0CB25F', 'Gran Templo numero 3', '1985-08-10', '2015-03-06 12:11:12'),
+(8, 3, 15000008, 'Masafumi', 'Sakanashi', '*4E26442531A60232D7E3B2CB44295EC6997CC04A', 'Quilmes 3', '1954-10-31', '2015-03-12 10:37:19'),
+(11, 1, 2131435, 'leandro', 'toniut', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'nose 20f', '2000-04-06', '2015-04-06 11:11:33'),
+(12, 1, 23657412, 'juan', 'pepito', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'dsad 43', '2000-02-15', '2015-04-06 11:12:39'),
+(13, 2, 1236448, 'Elena', 'Conde', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Magallanes 123', '2015-12-31', '2015-04-06 11:56:04');
 
 -- --------------------------------------------------------
 
@@ -660,7 +671,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `lista_usuarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `lista_usuarios` AS select `usuario`.`id` AS `usuario_id`,`usuario`.`tipo_id` AS `tipo_id`,`tipo_usuario`.`nombre` AS `tipo`,concat(`usuario`.`apellido`,', ',`usuario`.`nombres`) AS `nombre_completo`,`usuario`.`direccion` AS `direccion`,`usuario`.`fecha_nacimiento` AS `fecha_nacimiento`,cast(`usuario`.`hora_inscripcion` as date) AS `fecha_inscripcion` from (`usuario` join `tipo_usuario` on((`tipo_usuario`.`id` = `usuario`.`tipo_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `lista_usuarios` AS select `usuario`.`id` AS `usuario_id`,`usuario`.`dni` AS `dni`,`usuario`.`tipo_id` AS `tipo_id`,`tipo_usuario`.`nombre` AS `tipo`,concat(`usuario`.`apellido`,', ',`usuario`.`nombres`) AS `nombre_completo`,`usuario`.`direccion` AS `direccion`,`usuario`.`fecha_nacimiento` AS `fecha_nacimiento`,cast(`usuario`.`hora_inscripcion` as date) AS `fecha_inscripcion` from (`usuario` join `tipo_usuario` on((`tipo_usuario`.`id` = `usuario`.`tipo_id`)));
 
 --
 -- Indexes for dumped tables
@@ -754,7 +765,7 @@ ALTER TABLE `tipo_usuario`
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
- ADD PRIMARY KEY (`id`), ADD KEY `fk_TipoUsuario` (`tipo_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `dni` (`dni`), ADD KEY `fk_TipoUsuario` (`tipo_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -764,7 +775,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `actividad`
 --
 ALTER TABLE `actividad`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `anuncio`
 --
@@ -789,7 +800,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `historial_horario`
 --
 ALTER TABLE `historial_horario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `historial_precio`
 --
@@ -819,7 +830,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- Constraints for dumped tables
 --
