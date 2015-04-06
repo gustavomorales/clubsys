@@ -20,31 +20,28 @@ class Actividades_model extends CI_Model {
 			if($this->db->affected_rows() > 0) {
 				return array('success', 'Actividad creada con &eacute;xito');
 			} else {
-			    return array('danger', 'Error al intentar agregar actividad.');
+				return array('danger', 'Error al intentar agregar actividad.');
 			}
 		}
 	}
 
-	public function update_actividad($data) {
+	public function update_actividad($data, $nombreActual) {
 		$id = $data['id'];
 		$nombre = $data['nombre'];
 		$descripcion = $data['descripcion'];
 		$instructor = $data['instructor'];
 
-		$existe = $this->db->get_where('actividad', array('nombre' => $nombre));
-
-		if ($existe->result_array()) {
-			return array('danger','No puede haber dos actividades con el mismo nombre.');
+		if ($nombre != $nombreActual) {
+			$existe = $this->db->get_where('actividad', array('nombre' => $nombre));
+			if ($existe->result_array()) 
+				return array('danger',"No puede haber dos actividades con el mismo nombre ({$nombre}).");
 		}
-		else {
-			$sql = "update `actividad` SET `instructor_id`= ?,`nombre`= ?,`descripcion`= ? WHERE `id` = $id";
-			$this->db->query($sql, array($instructor, $nombre, $descripcion));
 
-			if ($this->db->affected_rows() > 0)
-				return array('success', 'Actividad modificada con &eacute;xito');
-			else
-				return array('danger', 'Error en la base de datos al intentar modificar la actividad.');
-		} 
+		$sql = "update `actividad` SET `instructor_id`= ?,`nombre`= ?,`descripcion`= ? WHERE `id` = $id";
+		$this->db->query($sql, array($instructor, $nombre, $descripcion));
+		
+		return array('success', 'Actividad modificada con &eacute;xito');
+		
 	}
 
 	public function set_historial_horario($actividad, $implementacion) {
@@ -92,32 +89,40 @@ class Actividades_model extends CI_Model {
 	}
 
 	public function get_usuarios_actividad($id) {
-			$this->db->select('actividad_id, usuario_id, nombre_actividad as actividad, participante');
-			$this->db->from('lista_participantes');
-			$this->db->where('actividad_id', $id);
-   			$this->db->where('finalizacion > "'. date('Y-m-d') .'"');
+		$this->db->select('actividad_id, usuario_id, nombre_actividad as actividad, participante');
+		$this->db->from('lista_participantes');
+		$this->db->where('actividad_id', $id);
+		$this->db->where('finalizacion > "'. date('Y-m-d') .'"');
 
-			$query = $this->db->get();
+		$query = $this->db->get();
 
-			return $query->result_array();
-		}
+		return $query->result_array();
+	}
 
 	public function get_actividades_usuario($id) {
-			$this->db->select('actividad_id, nombre_actividad as actividad, participante');
-			$this->db->from('lista_participantes');
-			$this->db->where('usuario_id', $id);
-   			$this->db->where('finalizacion > "'. date('Y-m-d') .'"');
+		$this->db->select('actividad_id, nombre_actividad as actividad, participante');
+		$this->db->from('lista_participantes');
+		$this->db->where('usuario_id', $id);
+		$this->db->where('finalizacion > "'. date('Y-m-d') .'"');
 
-			$query = $this->db->get();
+		$query = $this->db->get();
 
-			return $query->result_array();
-		}
+		return $query->result_array();
+	}
 
 	public function inscribir_actividad($usuario, $actividad) {
-		$existe = $this->db->get('actividad_por_usuario', array('usuario_id' => $usuario, 'actividad_id' => $actividad));
-
+		$existe = $this->db->get_where('actividad_por_usuario', array('usuario_id' => $usuario, 'actividad_id' => $actividad));
 		if ($existe->result_array()) {
-			return array('danger', 'Ya está inscripto.');
+			$registro = $existe->result_array();
+			if ($registro[0]['fecha_finalizacion'] > date('Y-m-d'))
+				return array('danger', 'Socio ya est&aacute; inscripto.');
+			else {
+				$this->db->update('actividad_por_usuario', array('fecha_finalizacion' => '9999-12-31', 'fecha_inicio' => date('Y-m-d')), array('usuario_id' => $usuario, 'actividad_id' => $actividad));
+				if ($this->db->affected_rows() > 0)
+					return array('success', 'Alta exitosa.');
+				else
+					return array('danger', 'Error en la base de datos al intentar dar de alta.');
+			}
 		}
 		else
 		{

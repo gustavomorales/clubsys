@@ -67,6 +67,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputdni" class="col-sm-2 control-label">DNI</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputdni" name="dni" placeholder="DNI">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="selectTipo" class="col-sm-2 control-label">Tipo</label>
                                         <div class="col-sm-10">
                                         <select name="tipo" class="form-control">
@@ -104,12 +110,13 @@
                     <!-- /.modal -->
                     <div class="table-responsive col-sm-12">
                         <?php
-                        $this->table->set_heading(array('#', 'Tipo', 'Apellidos y nombres', 'Dirección', 'Fecha de nacimiento', 'Fecha de inscripción', ""));
+                        $this->table->set_heading(array('#', 'DNI', 'Apellidos y nombres', 'Tipo', 'Dirección', 'Fecha de nacimiento', 'Fecha de inscripción', ""));
                         foreach ($socios as $socios_item) {
                             $this->table->add_row(array(
                                 $socios_item['usuario_id'],
-                                $socios_item['tipo'],
+                                $socios_item['dni'],
                                 $socios_item['nombre_completo'],
+                                $socios_item['tipo'],
                                 $socios_item['direccion'],
                                 $socios_item['fecha_nacimiento'],
                                 $socios_item['fecha_inscripcion'],
@@ -151,6 +158,13 @@ echo $this->table->generate();
                     <label for="inputNombresMod" class="col-sm-2 control-label">Nombres</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputNombresMod" name="nombresMod" placeholder="Nombres">
+                    </div>
+                </div>
+                <input type="hidden" id="inputDniActual" name="dniActual" value="">
+                <div class="form-group">
+                    <label for="inputDniMod" class="col-sm-2 control-label">DNI</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputDniMod" name="dniMod" placeholder="DNI">
                     </div>
                 </div>
                 <div class="form-group">
@@ -209,11 +223,13 @@ echo $this->table->generate();
                 var arr = tableData[2].split(', ');
                 $("#inputApellidosMod").val($.trim(arr[0]));
                 $("#inputNombresMod").val($.trim(arr[1]));
+                $("#inputDniActual").val($.trim(tableData[1]));
+                $("#inputDniMod").val($.trim(tableData[1]));
                 $("#inputIdMod").val($.trim(tableData[0]));
-                $("#inputDireccionMod").val($.trim(tableData[3]));
-                $("#inputFechaNacimientoMod").val($.trim(tableData[4]));
+                $("#inputDireccionMod").val($.trim(tableData[4]));
+                $("#inputFechaNacimientoMod").val($.trim(tableData[5]));
                 $("#selectTipoMod option").filter(function() {
-                    return($(this).text() == $.trim(tableData[1]))
+                    return($(this).text() == $.trim(tableData[3]))
                 }).prop('selected', true);
             })
         }); 

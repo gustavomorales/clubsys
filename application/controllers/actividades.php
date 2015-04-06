@@ -64,11 +64,11 @@ class Actividades extends CI_Controller {
 		$instructor= $this->input->post('instructorMod');
 		$descripcion= $this->input->post('descripcionMod');
 		$fecha= $this->input->post('fechaMod');
+		$nombreActual = $this->input->post('nombreActual');
 
 		$data=array('id'=>$id,'nombre'=>$nombre,'instructor'=>$instructor,'descripcion'=>$descripcion);
 
-		$mensaje = $this->actividades_model->update_actividad($data);
-
+		$mensaje = $this->actividades_model->update_actividad($data, $nombreActual);
 		$this->session->set_flashdata($mensaje[0], $mensaje[1]);
 			
 		redirect('actividades/index');

@@ -109,7 +109,7 @@
 						<div class="col-sm-6">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-								<i class="glyphicon glyphicon-plus"></i> Agregar Actividad
+								<i class="glyphicon glyphicon-plus"></i> Modificar actividad
 							</button>
 						</div>
 						<!-- Modal -->
@@ -123,6 +123,7 @@
 									<?php echo form_open('actividades/modificar','class="form-horizontal"'); ?>
 									<div class="modal-body">
                 						<input type="hidden" id="inputIdMod" name="idMod" value="">
+                						<input type="hidden" id="inputNombreActual" name="nombreActual" value="">
 										<div class="form-group">
 											<label for="nombre" class="col-sm-2 control-label">Nombre</label>
 											<div class="col-sm-10">
@@ -187,6 +188,7 @@
 					return $(this).text();
 				}).get();
                 $("#inputIdMod").val($.trim(tableData[0]));
+				$("#inputNombreActual").val($.trim(tableData[1]));
 				$("#nombreMod").val($.trim(tableData[1]));
 				$("#descripcionMod").val($.trim(tableData[2]));
 				$("#instructorMod option").filter(function() {

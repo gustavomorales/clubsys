@@ -41,12 +41,17 @@ class Socios extends CI_Controller {
 				),
 			array(
 				'field'   => 'direccion', 
-				'label'   => 'Dirección', 
+				'label'   => 'Direcci&oacute;n', 
 				'rules'   => 'required'
 				),
 			array(
 				'field'   => 'fechaNacimiento', 
 				'label'   => 'Fecha de nacimiento', 
+				'rules'   => 'required'
+				),
+			array(
+				'field'   => 'dni', 
+				'label'   => 'DNI', 
 				'rules'   => 'required'
 				)
 			);
@@ -56,18 +61,19 @@ class Socios extends CI_Controller {
 			$detalles = array(
 				'nombres' => $this->input->post('nombres'),
 				'apellido' => $this->input->post('apellidos'),
+				'dni'=>$this->input->post('dni'),
 				'tipo' => $this->input->post('tipo'),
 				'direccion' => $this->input->post('direccion'),
 				'fechaNacimiento' => $this->input->post('fechaNacimiento')
 				);
 			
-			$this->socios_model->set_socios($detalles);
-
-			redirect('socios');
+			$mensaje = $this->socios_model->set_socios($detalles);
+			$this->session->set_flashdata($mensaje[0], $mensaje[1]);
 		}
 		else {
-			redirect('socios');
+			$this->session->set_flashdata('warning', validation_errors());
 		}
+		redirect('socios');
 	}
 
 	public function modificar() {
@@ -84,12 +90,17 @@ class Socios extends CI_Controller {
 				),
 			array(
 				'field'   => 'direccionMod', 
-				'label'   => 'Dirección', 
+				'label'   => 'Direcci&oacute;n', 
 				'rules'   => 'required'
 				),
 			array(
 				'field'   => 'fechaNacimientoMod', 
 				'label'   => 'Fecha de nacimiento', 
+				'rules'   => 'required'
+				),
+			array(
+				'field'   => 'dniMod', 
+				'label'   => 'DNI', 
 				'rules'   => 'required'
 				)
 			);
@@ -102,21 +113,23 @@ class Socios extends CI_Controller {
 				'apellidos' => $this->input->post('apellidosMod'),
 				'tipo' => $this->input->post('tipoMod'),
 				'direccion' => $this->input->post('direccionMod'),
-				'nacimiento' => $this->input->post('fechaNacimientoMod')
+				'nacimiento' => $this->input->post('fechaNacimientoMod'),
+				'dni' => $this->input->post('dniMod')
 				);
-			$this->socios_model->update_socio($detalles);
-			redirect('socios');
+			$dniActual = $this->input->post('dniActual');
+			
+			$mensaje = $this->socios_model->update_socio($detalles, $dniActual);
+			$this->session->set_flashdata($mensaje[0], $mensaje[1]);
 		}
 		else {
-			redirect('socios');
+			$this->session->set_flashdata('warning', validation_errors());
 		}
+		redirect('socios');
 	}
 
 	public function eliminar($id) {
-		if ($this->socios_model->delete_socio($id))
-			$this->session->set_flashdata('mensaje', "Eliminaci&oacute;n exitosa.");
-		else
-			$this->session->set_flashdata('error', "Error al intentar eliminar el item de id {$id}.");
+		$mensaje = $this->socios_model->delete_socio($id);
+		$this->session->set_flashdata($mensaje[0], $mensaje[1]);
 		redirect('socios');
 	}
 }

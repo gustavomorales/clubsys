@@ -4,11 +4,30 @@ class Socios_model extends CI_model {
 		$this->load->database();
 	}
 
-	public function set_socios($detalles) {
-		$query = $this->db->query("call agregar_usuario('{$detalles['tipo']}', '{$detalles['nombres']}', '{$detalles['apellido']}', '1234', '{$detalles['direccion']}', '{$detalles['fechaNacimiento']}')");
+	public function set_socios($data) {
+		$tipo = $data['tipo'];
+		$nombres = $data['nombres'];
+		$apellido = $data['apellido'];
+		$direccion = $data['direccion'];
+		$fechaNacimiento = $data['fechaNacimiento'];
+		$dni = $data['dni'];
+
+		$existe = $this->db->get_where('usuario', array('dni' => $dni));
+		if ($existe->result_array()) {
+			return array('danger',"Ya hay un socio con el mismo DNI ({$dni}).");
+		}
+		else {
+			$this->db->query("call agregar_usuario('{$tipo}', '{$nombres}', '{$apellido}', '1234', '{$direccion}', '{$fechaNacimiento}', '{$dni}')");
+
+			if($this->db->affected_rows() > 0) {
+				return array('success', 'Socio creado con &eacute;xito');
+			} else {
+				return array('danger', 'Error al intentar crear socio.');
+			}
+		}
 	}
 
-	public function get_socios($string = FALSE) {
+	public function get_socios($string = FALSE) {	
 		$query_string = "SELECT * FROM `lista_usuarios`";
 
 		if ($string) {
@@ -28,17 +47,28 @@ class Socios_model extends CI_model {
 
 		return $query->result_array();
 	}
+	public function update_socio($data, $dniActual) {
 
-	public function update_socio($data) {
 		$info = array(
 			'tipo_id' => $data['tipo'],
 			'nombres' => $data['nombres'],
 			'apellido' => $data['apellidos'],
 			'direccion' => $data['direccion'],
-			'fecha_nacimiento' => $data['nacimiento']
+			'fecha_nacimiento' => $data['nacimiento'],
+			'dni' => $data['dni']
 			);
+
+		if ($info['dni'] != $dniActual) {
+			$existe = $this->db->get_where('usuario', array('dni' => $info['dni']));
+			if ($existe->result_array()) 
+				return array('danger',"Ya hay un socio con el mismo DNI ({$info['dni']}).");
+		}
+
 		$this->db->where('id', $data['id']);
 		$this->db->update('usuario', $info); 
+
+		return array('success', 'Socio modificado con &eacute;xito');
+		
 	}
 
 	public function get_tipos(){
@@ -50,9 +80,9 @@ class Socios_model extends CI_model {
 	public function delete_socio($id) {
 		$this->db->delete('usuario', array('id' => $id));
 		if ($this->db->affected_rows() > 0)
-			return true;
+			return array('success', 'Socio eliminado exitosamente.');
 		else
-			return false;
+			return array('danger', "Error al intentar eliminar socio (id: {$id}).");
 	}
 
 	public function get_socio_id($id){

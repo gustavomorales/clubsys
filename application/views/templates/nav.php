@@ -19,13 +19,6 @@
 						<?php echo anchor('dashboard', 'Dashboard'); ?>
 					</li>
 				</ul>
-				<?php
-				if (!$this->session->userdata('username')):
-					echo anchor('usuarios/login', 'Iniciar sesión', 'class="btn btn-default navbar-btn"');
-				else:
-					echo anchor('usuarios/logout', 'Cerrar sesión', 'class="btn btn-default navbar-btn"');
-				endif; 
-				?>
 			</div>
 		</div>
 	</nav>
