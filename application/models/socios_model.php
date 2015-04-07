@@ -60,8 +60,10 @@ class Socios_model extends CI_model {
 
 		if ($info['dni'] != $dniActual) {
 			$existe = $this->db->get_where('usuario', array('dni' => $info['dni']));
-			if ($existe->result_array()) 
-				return array('danger',"Ya hay un socio con el mismo DNI ({$info['dni']}).");
+			if ($existe->result_array()) {
+				$mensaje = htmlentities("Ya existe otro socio con el mismo DNI ({$info["dni"]}).", ENT_COMPAT, 'UTF-8');
+				return array('danger', $mensaje);
+			}
 		}
 
 		$this->db->where('id', $data['id']);
