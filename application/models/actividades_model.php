@@ -141,7 +141,7 @@ class Actividades_model extends CI_Model {
 		$sql = ("call desinscribir_a_actividad(?, ?)");
 		$this->db->query($sql, array($actividad, $usuario));
 		if ($this->db->affected_rows() > 0)
-			return array('success', 'Usuario dado de baja.');
+			return array('success', 'Actividad dado de baja.');
 		else
 			return array('danger', 'Error en la base de datos al intentar dar de baja.');
 	}

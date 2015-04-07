@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2015 at 01:05 PM
+-- Generation Time: Apr 07, 2015 at 10:56 AM
 -- Server version: 5.6.15
 -- PHP Version: 5.3.10-1ubuntu3.17
 
@@ -200,23 +200,14 @@ CREATE TABLE IF NOT EXISTS `actividad` (
   `instructor_id` int(11) DEFAULT NULL,
   `nombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `descripcion` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `actividad`
 --
 
 INSERT INTO `actividad` (`id`, `instructor_id`, `nombre`, `descripcion`) VALUES
-(1, 4, 'natación', 'La natación es un deporte que consiste en el desplazamiento de una persona en el agua, sin que esta toque el suelo. Es regulado por la Federación Internacional de Natación.'),
-(2, 8, 'sumo', 'Sumo es un tipo de lucha libre donde dos luchadores contrincantes o rikishi se enfrentan en un área circular. Es de origen japonés y mantiene gran parte de la tradición sintoista antigua.'),
-(3, 8, 'aikido', 'El aikidō es un gendai budō o arte marcial moderno del Japón.Fue desarrollado inicialmente por el maestro Morihei Ueshiba (1883-1969), aproximadamente entre los años de 1930 y 1960.La característica fundamental del Aikido es la búsqueda de la neutralización del contrario en situaciones de conflicto, dando lugar a la derrota del adversario sin dañarlo, en lugar de simplemente destruirlo o humillarlo.'),
-(6, 1, 'Futbol', 'Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(7, 4, 'kunfu', 'fgsdg'),
-(9, 8, 'Metegol', 'asdf'),
-(10, 4, 'Golf', 'asdf'),
-(11, 8, 'Curso de panadería', 'asdf'),
-(15, 4, 'Maravillas', 'asdf'),
-(16, 4, 'otro actividad', 'fdsfdsffsafa');
+(3, 4, 'Gimnasia Artistica', 'Gimnasia Artistica');
 
 -- --------------------------------------------------------
 
@@ -236,13 +227,8 @@ CREATE TABLE IF NOT EXISTS `actividad_por_usuario` (
 --
 
 INSERT INTO `actividad_por_usuario` (`fecha_inicio`, `fecha_finalizacion`, `usuario_id`, `actividad_id`) VALUES
-('2015-04-06', '9999-12-31', 1, 1),
-('2015-04-06', '9999-12-31', 1, 3),
-('2015-04-06', '9999-12-31', 1, 9),
-('2015-04-06', '9999-12-31', 1, 11),
-('2015-04-01', '9999-12-31', 3, 2),
-('2015-04-01', '9999-12-31', 3, 9),
-('2015-04-06', '9999-12-31', 11, 1);
+('2015-04-07', '9999-12-31', 2, 1),
+('2015-04-07', '9999-12-31', 5, 3);
 
 -- --------------------------------------------------------
 
@@ -277,8 +263,8 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('25b306e87da7f9d0150fdf31c15d4385', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1428336101, 'a:1:{s:17:"flash:old:success";s:37:"Actividad modificada con &eacute;xito";}'),
-('e9c3dd306b4c9a4a20458c1b92fbb56e', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1428330918, '');
+('448c16ad33ae89f3da0b78289df58d51', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:34.0) Gecko/20100101 Firefox/34.0', 1428410015, ''),
+('72fd753cdc075f42e5b8ac5a08d20bb5', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.120 Chrome/37.0.2062.120 ', 1428414858, '');
 
 -- --------------------------------------------------------
 
@@ -291,38 +277,7 @@ CREATE TABLE IF NOT EXISTS `clase` (
   `actividad_id` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=26 ;
-
---
--- Dumping data for table `clase`
---
-
-INSERT INTO `clase` (`id`, `actividad_id`, `fecha`, `descripcion`) VALUES
-(1, 2, '2015-07-16', NULL),
-(2, 2, '2015-07-23', NULL),
-(3, 2, '2015-07-30', NULL),
-(4, 2, '2015-08-06', NULL),
-(5, 2, '2015-08-13', NULL),
-(6, 2, '2015-08-20', NULL),
-(7, 2, '2015-08-27', NULL),
-(8, 2, '2015-09-03', NULL),
-(9, 2, '2015-09-10', NULL),
-(10, 2, '2015-09-17', NULL),
-(11, 2, '2015-09-24', NULL),
-(12, 2, '2015-10-01', NULL),
-(13, 2, '2015-10-08', NULL),
-(14, 2, '2015-10-15', NULL),
-(15, 2, '2015-10-22', NULL),
-(16, 2, '2015-10-29', NULL),
-(17, 2, '2015-11-05', NULL),
-(18, 2, '2015-11-12', NULL),
-(19, 2, '2015-11-19', NULL),
-(20, 2, '2015-11-26', NULL),
-(21, 2, '2015-12-03', NULL),
-(22, 2, '2015-12-10', NULL),
-(23, 2, '2015-12-17', NULL),
-(24, 2, '2015-12-24', NULL),
-(25, 2, '2015-12-31', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -383,20 +338,14 @@ CREATE TABLE IF NOT EXISTS `historial_horario` (
   `actividad_id` int(11) NOT NULL,
   `fecha_implementacion` date NOT NULL,
   `fecha_finalizacion` date DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `historial_horario`
 --
 
 INSERT INTO `historial_horario` (`id`, `actividad_id`, `fecha_implementacion`, `fecha_finalizacion`) VALUES
-(1, 3, '2015-05-01', NULL),
-(4, 6, '2015-03-12', NULL),
-(5, 1, '2015-04-14', NULL),
-(6, 2, '2015-07-14', NULL),
-(7, 11, '2015-11-30', NULL),
-(10, 15, '2015-12-31', NULL),
-(11, 16, '2015-04-06', NULL);
+(3, 3, '2015-04-16', NULL);
 
 -- --------------------------------------------------------
 
@@ -409,18 +358,7 @@ CREATE TABLE IF NOT EXISTS `historial_precio` (
   `fecha_implementacion` date NOT NULL,
   `actividad_id` int(11) DEFAULT NULL,
   `valor` decimal(11,2) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `historial_precio`
---
-
-INSERT INTO `historial_precio` (`id`, `fecha_implementacion`, `actividad_id`, `valor`) VALUES
-(4, '2003-01-01', 3, 133.48),
-(5, '2003-01-01', 3, 133.48),
-(6, '2016-07-01', 3, 117.50),
-(7, '2016-07-01', 5, 117.50),
-(8, '2016-01-01', 0, 117.50);
+) ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -434,14 +372,7 @@ CREATE TABLE IF NOT EXISTS `horario` (
   `hora_entrada` time NOT NULL,
   `hora_salida` time NOT NULL,
   `dia` tinyint(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `horario`
---
-
-INSERT INTO `horario` (`id`, `historial_id`, `hora_entrada`, `hora_salida`, `dia`) VALUES
-(1, 6, '08:30:00', '10:30:00', 3);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -619,23 +550,16 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `direccion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `hora_inscripcion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=ascii AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `tipo_id`, `dni`, `nombres`, `apellido`, `password`, `direccion`, `fecha_nacimiento`, `hora_inscripcion`) VALUES
-(1, 2, 15000002, 'Michael', 'Jordan', '*948F9BEBA5FA4AD15FFF190593AC3EE1F9EDFE3F', 'Basket Blvd 511', '1973-02-16', '2015-03-06 10:32:11'),
-(3, 2, 15000003, 'Donald', 'Trump', '*BFA23CCF482AA32DA037CAA02C47E441539B62BB', 'Trump hotel nr. 3, 14C', '1946-06-14', '2015-03-06 10:40:03'),
-(4, 3, 15000004, 'Michael', 'Phelps', '*4F576A4C669E01243A30CAE93A4E54E402966BA2', 'Nobody', '1985-06-30', '2015-03-06 10:44:38'),
-(5, 4, 15000005, 'Tiger', 'Woods', '*D382EF28FB7C47A3650AB8C4759F31A348014994', 'House of Tiger 34', '1975-12-30', '2015-03-06 10:54:54'),
-(6, 4, 15000006, 'Aaron', 'Peirsol', '*EE780D4E296B6274F126A02EDDC3475B41C1D8AC', 'irvania', '1983-07-23', '2015-03-06 11:14:41'),
-(7, 3, 15000007, 'Rikisaburo', 'Kakuryu', '*7E5E8E5443C19887D307CF1FC86FB31ACF0CB25F', 'Gran Templo numero 3', '1985-08-10', '2015-03-06 12:11:12'),
-(8, 3, 15000008, 'Masafumi', 'Sakanashi', '*4E26442531A60232D7E3B2CB44295EC6997CC04A', 'Quilmes 3', '1954-10-31', '2015-03-12 10:37:19'),
-(11, 1, 2131435, 'leandro', 'toniut', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'nose 20f', '2000-04-06', '2015-04-06 11:11:33'),
-(12, 1, 23657412, 'juan', 'pepito', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'dsad 43', '2000-02-15', '2015-04-06 11:12:39'),
-(13, 2, 1236448, 'Elena', 'Conde', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Magallanes 123', '2015-12-31', '2015-04-06 11:56:04');
+(4, 3, 293487777, 'Frepo', 'Profe', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Mi casa 1234 D5', '2014-01-23', '2015-04-07 10:50:54'),
+(5, 4, 25896355, 'Segundo', 'Sombra', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Magallanes 123', '2015-04-06', '2015-04-07 10:52:42'),
+(6, 2, 1236448, 'Amelia', 'Acentos', '*A4B6157319038724E3560894F7F932C8886EBFCF', 'Magallanes 123', '2015-04-06', '2015-04-07 10:54:07');
 
 -- --------------------------------------------------------
 
@@ -775,7 +699,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `actividad`
 --
 ALTER TABLE `actividad`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `anuncio`
 --
@@ -785,7 +709,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `clase`
 --
 ALTER TABLE `clase`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `comentario`
 --
@@ -800,17 +724,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `historial_horario`
 --
 ALTER TABLE `historial_horario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `historial_precio`
 --
 ALTER TABLE `historial_precio`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `horario`
 --
 ALTER TABLE `horario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pago`
 --
@@ -830,40 +754,10 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `actividad`
---
-ALTER TABLE `actividad`
-ADD CONSTRAINT `fk_Instructor` FOREIGN KEY (`instructor_id`) REFERENCES `usuario` (`id`);
-
---
--- Constraints for table `anuncio`
---
-ALTER TABLE `anuncio`
-ADD CONSTRAINT `fk_Usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
-
---
--- Constraints for table `clase`
---
-ALTER TABLE `clase`
-ADD CONSTRAINT `fk_ActividadClase` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
-
---
--- Constraints for table `historial_horario`
---
-ALTER TABLE `historial_horario`
-ADD CONSTRAINT `fk_Actividad` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`id`);
-
---
--- Constraints for table `horario`
---
-ALTER TABLE `horario`
-ADD CONSTRAINT `fk_HistorialHorario` FOREIGN KEY (`historial_id`) REFERENCES `historial_horario` (`id`);
 
 --
 -- Constraints for table `usuario`

@@ -28,25 +28,30 @@
 						</ol>
 					</div>
 					<?php $this->load->view('templates/mensajes'); ?>
-							
-				</div>
 
-					<div class="table-responsive col-sm-12">
-							<?php
-							if(isset($linscriptos)){
-								$this->table->set_heading(array('Actividad','Participantes', ""));
-								foreach ($linscriptos as $act_item) {
-									$this->table->add_row(array(
-										$act_item['actividad'],
-										$act_item['participante'],
-										anchor("actividades/baja2/{$act_item['actividad_id']}/{$act_item['usuario_id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro de dar de baja al socio {$act_item['participante']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
-									));
-								}
-								echo $this->table->generate();
-							} 
-							?>
-						</div>
-						<!-- /.table-responsive -->
+				</div>
+				<div class="col-sm-12">
+					<p><strong>Total de inscriptos:</strong> <?php echo count($linscriptos); ?></p>
+				</div>
+				<div class="table-responsive col-sm-12">
+					<?php
+					if(isset($linscriptos)){
+						$this->table->set_heading(array('Actividad','Participantes', ""));
+						foreach ($linscriptos as $act_item) {
+							$this->table->add_row(array(
+								$act_item['actividad'],
+								$act_item['participante'],
+								anchor("actividades/baja2/{$act_item['actividad_id']}/{$act_item['usuario_id']}", '<i class="glyphicon glyphicon-trash"></i>', array('onclick'=>"return confirm('¿Está seguro de dar de baja al socio {$act_item['participante']}?')", 'class' => 'btn btn-danger btn-sm', 'role' => 'button', 'title' => 'Eliminar'))
+								));
+						}
+						echo $this->table->generate();
+					} 
+					?>
+				</div>
+				<div class="col-sm-12">
+					<p><strong>Total de inscriptos:</strong> <?php echo count($linscriptos); ?></p>
+				</div>
+				<!-- /.table-responsive -->
 
 				<!-- /.row -->
 			</div>

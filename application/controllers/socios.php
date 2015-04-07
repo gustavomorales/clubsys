@@ -52,7 +52,7 @@ class Socios extends CI_Controller {
 			array(
 				'field'   => 'dni', 
 				'label'   => 'DNI', 
-				'rules'   => 'required'
+				'rules'   => 'required|integer'
 				)
 			);
 		$this->form_validation->set_rules($config);

@@ -73,7 +73,7 @@
 										<div class="form-group">
 											<label for="fecha" class="col-sm-2 control-label">Fecha Inicio</label>
 											<div class="col-sm-10">
-												<input type="date" class="form-control" id="fecha" name ="fecha" placeholder="Seleccione fecha">
+												<input type="date" class="form-control" id="fecha" name ="fecha" placeholder="aaaa-mm-dd">
 											</div>
 										</div>
 									</div>
@@ -109,7 +109,7 @@
 						<div class="col-sm-6">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-								<i class="glyphicon glyphicon-plus"></i> Modificar actividad
+								<i class="glyphicon glyphicon-plus"></i> Agregar actividad
 							</button>
 						</div>
 						<!-- Modal -->
